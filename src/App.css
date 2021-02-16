@@ -1,0 +1,11 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f8f8f8;
+}
+
+input.holder::-webkit-input-placeholder {
+  color: rgba(37, 67, 83, 0.4);
+}
