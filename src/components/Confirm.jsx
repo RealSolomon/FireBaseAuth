@@ -2,74 +2,41 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import mail from '../img/mail.svg';
+import { styles } from '../utils/index';
 
 function Confirm() {
   const [error, setError] = React.useState('');
-  const { currentUser, signout } = useAuth();
-  const history = useHistory();
+  const { currentUser, sendemail } = useAuth();
 
-  async function handleSignOut() {
+  async function handleResend() {
     setError('');
 
     try {
-      await signout();
-      history.push('/signup');
+      await sendemail();
     } catch {
-      setError('Failed to sign out');
+      setError('Failed to resend the message');
     }
   }
 
   return (
     <>
-      <div
-        css={{
-          position: 'absolute',
-          top: '283px',
-          left: '50%',
-          marginRight: '-50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
+      <div css={styles.confcont}>
         <div
           css={{
             float: 'left',
-            marginTop: '56px',
           }}
         >
-          <h2
-            css={{
-              fontWeight: '800',
-              fontSize: '36px',
-              lineHeight: '44px',
-              color: '#254353',
-              textAlign: 'center',
-            }}
-          >
-            Confirm account
-          </h2>
+          <h2 css={styles.head}>Confirm account</h2>
           {error && (
             <Alert variant="outlined" severity="error">
               {error}
             </Alert>
           )}
-          <p
-            css={{
-              width: '294px',
-              height: '51px',
-              fontWeight: '600',
-              fontSize: '14px',
-              lineHeight: '17px',
-              textAlign: 'center',
-              color: 'rgba(37, 67, 83, 0.4)',
-              marginTop: '20px',
-              marginLeft: '70px',
-            }}
-          >
+          <p css={styles.info}>
             Please confirm your email by clicking on the link in the
             confirmation email that we sent to &nbsp;{' '}
             <p
@@ -82,39 +49,14 @@ function Confirm() {
             </p>
           </p>
           <button
-            css={{
-              marginTop: '40px',
-              width: '430px',
-              height: '50px',
-              background: '#57B3E4',
-              borderRadius: '35px',
-              border: 'none',
-              fontStyle: 'normal',
-              fontWeight: 'bold',
-              fontSize: '18px',
-              lineHeight: '22px',
-              color: '#fff',
-              cursor: 'pointer',
-              marginBottom: '15px',
-            }}
-            onClick={handleSignOut}
+            css={styles.btn}
+            style={{ marginBottom: '15px' }}
+            onClick={handleResend}
           >
             Resend
           </button>
-          {/* <Button variant="contained" color="primary" onClick={handleSignOut}>
-        Resend
-      </Button> */}
           <br />
-          <Link
-            css={{
-              fontWeight: 600,
-              fontSize: '14px',
-              lineHeight: '17px',
-              color: 'rgba(37, 67, 83, 0.75)',
-              marginLeft: '43%',
-            }}
-            to="/signup"
-          >
+          <Link css={styles.lnk} to="/signup">
             Sign out
           </Link>
         </div>

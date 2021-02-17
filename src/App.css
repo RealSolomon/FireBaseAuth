@@ -9,3 +9,15 @@
 input.holder::-webkit-input-placeholder {
   color: rgba(37, 67, 83, 0.4);
 }
+
+#nav li {
+  margin: 30px 40px 30px 0px;
+  display: inline-block;
+  background-color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  align-items: center;
+  text-align: center;
+  color: #757373;
+}

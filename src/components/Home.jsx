@@ -2,10 +2,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Alert from '@material-ui/lab/Alert';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { styles } from '../utils/index';
 
 function Home() {
   const [error, setError] = React.useState('');
@@ -24,62 +24,14 @@ function Home() {
   }
 
   return (
-    <div
-      css={{
-        position: 'absolute',
-        top: '383px',
-        left: '50%',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      <h2
-        css={{
-          fontWeight: '800',
-          fontSize: '36px',
-          lineHeight: '44px',
-          color: '#254353',
-          textAlign: 'center',
-          // position: 'absolute',
-          // top: '50%',
-          // left: '50%',
-          // marginRight: '-50%',
-          // transform: 'translate(-50%, -50%)',
-        }}
-      >
-        Home page
-      </h2>
+    <div css={styles.container} style={{ marginTop: '302px' }}>
+      <h2 css={styles.head}>Home page</h2>
       {error && (
         <Alert variant="outlined" severity="error">
           {error}
         </Alert>
       )}
-      {/* <Button
-        css={{
-          marginTop: '40px',
-        }}
-        variant="contained"
-        color="primary"
-        onClick={handleSignOut}
-      >
-        Sign out
-      </Button> */}
-      <button
-        onClick={handleSignOut}
-        css={{
-          marginTop: '40px',
-          width: '430px',
-          height: '50px',
-          backgroundColor: '#57B3E4',
-          borderRadius: '35px',
-          border: 'none',
-          fontSize: '18px',
-          lineHeight: '22px',
-          color: '#fff',
-          fontWeight: '700',
-          cursor: 'pointer',
-        }}
-      >
+      <button onClick={handleSignOut} css={styles.btn}>
         Sign out
       </button>
     </div>
