@@ -59,6 +59,9 @@ export const styles = {
     color: #fff;
     cursor: pointer;
     margin-top: 40px;
+    &:active {
+      background-color: rgba(87, 179, 228, 0.7);
+    }
   `,
   lnk: css`
     font-weight: 600;
@@ -77,5 +80,31 @@ export const styles = {
     color: rgba(37, 67, 83, 0.4);
     margin-top: 20px;
     margin-left: 70px;
+  `,
+  headcont: css`
+    width: 100%;
+    height: 81px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+  `,
+  logo: css`
+    margin-left: 51px;
+  `,
+  navbar: css`
+    background-color: #fff;
+  `,
+  headbtn: css`
+    margin-right: 51px;
+    background-color: #57b3e4;
+    border-radius: 5px;
+    padding: 10px 26px 10px 24px;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    align-items: center;
+    text-align: center;
   `,
 };

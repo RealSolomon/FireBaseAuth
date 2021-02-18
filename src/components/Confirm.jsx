@@ -7,16 +7,27 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import mail from '../img/mail.svg';
 import { styles } from '../utils/index';
+import spinner from '../img/spinblue.svg';
 
 function Confirm() {
   const [error, setError] = React.useState('');
   const { currentUser, sendemail } = useAuth();
+  const [loading, setLoading] = React.useState(false);
+
+  const [counter, setCounter] = React.useState(60);
+  React.useEffect(() => {
+    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+  }, [counter]);
 
   async function handleResend() {
     setError('');
+    setLoading(true);
 
     try {
-      await sendemail();
+      // await sendemail();
+      setTimeout(() => {
+        setLoading(false);
+      }, 2500);
     } catch {
       setError('Failed to resend the message');
     }
@@ -53,7 +64,8 @@ function Confirm() {
             style={{ marginBottom: '15px' }}
             onClick={handleResend}
           >
-            Resend
+            {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
+            {counter}
           </button>
           <br />
           <Link css={styles.lnk} to="/signup">
