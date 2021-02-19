@@ -41,18 +41,10 @@ function Confirm() {
     setError('');
     setLoading(true);
 
-    if (loading) {
+    try {
       setTimeout(() => {
         setLoading(false);
       }, 2500);
-    } else {
-      setTimerRunning(true);
-    }
-
-    try {
-      // setTimeout(() => {
-      //   setLoading(false);
-      // }, 2500);
       // await sendemail();
     } catch {
       setError('Failed to resend the message');
@@ -88,20 +80,20 @@ function Confirm() {
               {currentUser.email}
             </p>
           </p>
-          {!timerRunning ? (
+          {timerRunning ? (
+            <button css={styles.btn} style={{ marginBottom: '15px' }}>
+              {!loading && counter > 0 ? counter : 'Resend'}
+            </button>
+          ) : (
             <button
               css={styles.btn}
               style={{ marginBottom: '15px' }}
               onClick={handleResend}
               disabled={loading}
             >
-              {loading && <img src={spinner} alt="spinner"></img>}
-              {/* {loading ? setTimerRunning(true) : null} */}
+              {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
+              {loading ? setTimerRunning(true) : null}
               {/* {timerRunning ? counter : 'Resend'} */}
-            </button>
-          ) : (
-            <button css={styles.btn} style={{ marginBottom: '15px' }}>
-              {!loading && counter > 0 ? counter : 'Resend'}
             </button>
           )}
 
