@@ -13,14 +13,9 @@ function Confirm() {
   const [error, setError] = React.useState('');
   const { currentUser, sendemail } = useAuth();
   const [loading, setLoading] = React.useState(false);
-  const [time, setTime] = React.useState(false);
   const [timerRunning, setTimerRunning] = React.useState(false);
 
   const [counter, setCounter] = React.useState(10);
-
-  function handleTimer() {
-    setTimerRunning(true);
-  }
 
   React.useEffect(() => {
     let timer;
@@ -43,15 +38,13 @@ function Confirm() {
 
     try {
       setTimeout(() => {
+        setTimerRunning(true);
         setLoading(false);
       }, 2500);
       // await sendemail();
     } catch {
       setError('Failed to resend the message');
     }
-    // if (!loading) {
-    //   setTimerRunning(true);
-    // }
   }
 
   return (
@@ -82,7 +75,11 @@ function Confirm() {
           </p>
 
           {timerRunning ? (
-            <button css={styles.btn} style={{ marginBottom: '15px' }}>
+            <button
+              css={styles.btn}
+              style={{ marginBottom: '15px' }}
+              disabled={counter}
+            >
               {!loading & (counter > 0) ? counter : 'Resend'}
             </button>
           ) : (
@@ -92,11 +89,7 @@ function Confirm() {
               onClick={handleResend}
               disabled={loading}
             >
-              {/* {loading && <img src={spinner} alt="spinner"></img> }
-              {!loading && counter && 'Resend'} */}
               {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
-              {/* {timerRunning ? counter : 'Resend'} */}
-              {/* {loading ? setTimerRunning(true) : null} */}
             </button>
           )}
 
