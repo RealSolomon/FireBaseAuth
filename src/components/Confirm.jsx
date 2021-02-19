@@ -80,9 +80,10 @@ function Confirm() {
               {currentUser.email}
             </p>
           </p>
+
           {timerRunning ? (
             <button css={styles.btn} style={{ marginBottom: '15px' }}>
-              {!loading && counter > 0 ? counter : 'Resend'}
+              {!loading & (counter > 0) ? counter : 'Resend'}
             </button>
           ) : (
             <button
@@ -91,9 +92,11 @@ function Confirm() {
               onClick={handleResend}
               disabled={loading}
             >
+              {/* {loading && <img src={spinner} alt="spinner"></img> }
+              {!loading && counter && 'Resend'} */}
               {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
-              {loading ? setTimerRunning(true) : null}
               {/* {timerRunning ? counter : 'Resend'} */}
+              {/* {loading ? setTimerRunning(true) : null} */}
             </button>
           )}
 
