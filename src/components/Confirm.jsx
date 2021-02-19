@@ -13,29 +13,53 @@ function Confirm() {
   const [error, setError] = React.useState('');
   const { currentUser, sendemail } = useAuth();
   const [loading, setLoading] = React.useState(false);
-  const [timer, setTimer] = React.useState(false);
+  const [time, setTime] = React.useState(false);
+  const [timerRunning, setTimerRunning] = React.useState(false);
 
   const [counter, setCounter] = React.useState(10);
 
-  function handleTimer() {}
+  function handleTimer() {
+    setTimerRunning(true);
+  }
 
   React.useEffect(() => {
-    counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
-  }, [counter]);
+    let timer;
+    if (timerRunning) {
+      if (counter > 0) {
+        timer = setTimeout(() => setCounter((c) => c - 1), 1000);
+      }
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [counter, timerRunning]);
 
   async function handleResend() {
     setError('');
     setLoading(true);
 
-    try {
-      // await sendemail();
+    if (loading) {
       setTimeout(() => {
         setLoading(false);
       }, 2500);
+    } else {
+      setTimerRunning(true);
+    }
+
+    try {
+      // setTimeout(() => {
+      //   setLoading(false);
+      // }, 2500);
+      // await sendemail();
     } catch {
       setError('Failed to resend the message');
     }
-    setTimer(true);
+    // if (!loading) {
+    //   setTimerRunning(true);
+    // }
   }
 
   return (
@@ -64,22 +88,20 @@ function Confirm() {
               {currentUser.email}
             </p>
           </p>
-          {!timer ? (
+          {!timerRunning ? (
             <button
               css={styles.btn}
               style={{ marginBottom: '15px' }}
               onClick={handleResend}
+              disabled={loading}
             >
-              {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
-              {/* {counter} */}
+              {loading && <img src={spinner} alt="spinner"></img>}
+              {/* {loading ? setTimerRunning(true) : null} */}
+              {/* {timerRunning ? counter : 'Resend'} */}
             </button>
           ) : (
-            <button
-              disabled="true"
-              css={styles.btn}
-              style={{ marginBottom: '15px' }}
-            >
-              {counter > 0 ? counter : 'Resend'}
+            <button css={styles.btn} style={{ marginBottom: '15px' }}>
+              {!loading && counter > 0 ? counter : 'Resend'}
             </button>
           )}
 
