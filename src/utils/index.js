@@ -59,7 +59,10 @@ export const styles = {
     color: #fff;
     cursor: pointer;
     margin-top: 40px;
-    &:active {
+    &:focus {
+      background-color: rgba(87, 179, 228, 0.7);
+    }
+    &:disabled {
       background-color: rgba(87, 179, 228, 0.7);
     }
   `,

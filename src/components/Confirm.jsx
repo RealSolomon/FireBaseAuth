@@ -13,8 +13,12 @@ function Confirm() {
   const [error, setError] = React.useState('');
   const { currentUser, sendemail } = useAuth();
   const [loading, setLoading] = React.useState(false);
+  const [timer, setTimer] = React.useState(false);
 
-  const [counter, setCounter] = React.useState(60);
+  const [counter, setCounter] = React.useState(10);
+
+  function handleTimer() {}
+
   React.useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
   }, [counter]);
@@ -31,6 +35,7 @@ function Confirm() {
     } catch {
       setError('Failed to resend the message');
     }
+    setTimer(true);
   }
 
   return (
@@ -59,14 +64,25 @@ function Confirm() {
               {currentUser.email}
             </p>
           </p>
-          <button
-            css={styles.btn}
-            style={{ marginBottom: '15px' }}
-            onClick={handleResend}
-          >
-            {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
-            {counter}
-          </button>
+          {!timer ? (
+            <button
+              css={styles.btn}
+              style={{ marginBottom: '15px' }}
+              onClick={handleResend}
+            >
+              {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}
+              {/* {counter} */}
+            </button>
+          ) : (
+            <button
+              disabled="true"
+              css={styles.btn}
+              style={{ marginBottom: '15px' }}
+            >
+              {counter > 0 ? counter : 'Resend'}
+            </button>
+          )}
+
           <br />
           <Link css={styles.lnk} to="/signup">
             Sign out
