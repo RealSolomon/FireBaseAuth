@@ -59,7 +59,7 @@ function Confirm() {
         setTimerRunning(true);
         setLoading(false);
       }, 2500);
-      // await sendemail();
+      await sendemail();
     } catch {
       setError('Failed to resend the message');
     }
