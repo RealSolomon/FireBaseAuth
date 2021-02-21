@@ -15,6 +15,10 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
+  function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
+  }
+
   function sendemail() {
     const user = auth.currentUser;
     user.sendEmailVerification();
@@ -37,6 +41,7 @@ export function AuthProvider({ children }) {
     signup,
     signout,
     sendemail,
+    login,
   };
   return (
     <AuthContext.Provider value={value}>

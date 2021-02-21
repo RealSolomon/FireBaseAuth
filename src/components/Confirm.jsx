@@ -15,7 +15,7 @@ function Confirm() {
   const [loading, setLoading] = React.useState(false);
   const [timerRunning, setTimerRunning] = React.useState(false);
 
-  const [counter, setCounter] = React.useState(10);
+  const [counter, setCounter] = React.useState(5);
 
   React.useEffect(() => {
     let timer;
@@ -32,7 +32,25 @@ function Confirm() {
     };
   }, [counter, timerRunning]);
 
-  async function handleResend() {
+  async function handleResend(e) {
+    e.preventDefault();
+    setTimerRunning(false);
+    setLoading(true);
+
+    // if (timerRunning) {
+    //   setLoading(false);
+    //   setCounter(5);
+    // }
+
+    try {
+      setLoading(false);
+      setCounter(5);
+    } catch {
+      setError('Failed to resend the message');
+    }
+  }
+
+  async function handleSend() {
     setError('');
     setLoading(true);
 
@@ -78,6 +96,7 @@ function Confirm() {
             <button
               css={styles.btn}
               style={{ marginBottom: '15px' }}
+              onClick={handleResend}
               disabled={counter}
             >
               {!loading & (counter > 0) ? counter : 'Resend'}
@@ -86,7 +105,7 @@ function Confirm() {
             <button
               css={styles.btn}
               style={{ marginBottom: '15px' }}
-              onClick={handleResend}
+              onClick={handleSend}
               disabled={loading}
             >
               {loading ? <img src={spinner} alt="spinner"></img> : 'Resend'}

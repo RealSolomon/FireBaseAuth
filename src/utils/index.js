@@ -59,9 +59,7 @@ export const styles = {
     color: #fff;
     cursor: pointer;
     margin-top: 40px;
-    &:focus {
-      background-color: rgba(87, 179, 228, 0.7);
-    }
+
     &:disabled {
       background-color: rgba(87, 179, 228, 0.7);
     }
@@ -109,5 +107,10 @@ export const styles = {
     line-height: 22px;
     align-items: center;
     text-align: center;
+  `,
+  loglink: css`
+    text-decoration: none;
+    background-color: #fff;
+    color: #757373;
   `,
 };
