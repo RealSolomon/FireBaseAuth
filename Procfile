@@ -1,1 +1,1 @@
-web: firebase env.local
+web: node env.local
