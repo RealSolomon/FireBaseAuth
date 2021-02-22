@@ -96,7 +96,7 @@
 
 # Role-based redirects do not have a “to” property.
 [[redirects]]
-  from = "/gated-path"
+  from = "/"
   status = 200
   conditions = {Role = ["admin"]}
   force = true
