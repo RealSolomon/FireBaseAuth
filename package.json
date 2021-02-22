@@ -1,6 +1,6 @@
 {
   "name": "softcery",
-  "homepage": "https://softcery-tz.vercel.app/",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -49,5 +49,10 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
   }
 }
