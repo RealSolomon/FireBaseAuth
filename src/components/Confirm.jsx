@@ -15,7 +15,7 @@ function Confirm() {
   const [loading, setLoading] = React.useState(false);
   const [timerRunning, setTimerRunning] = React.useState(false);
 
-  const [counter, setCounter] = React.useState(5);
+  const [counter, setCounter] = React.useState(60);
 
   React.useEffect(() => {
     let timer;
