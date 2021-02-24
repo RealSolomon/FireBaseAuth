@@ -1,14 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-
 import React from 'react';
-import Alert from '@material-ui/lab/Alert';
-import { useAuth } from '../context/AuthContext';
-import { useHistory } from 'react-router-dom';
 import { jsx } from '@emotion/react';
-import { styles } from '../utils/index';
+import { useHistory } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
 
-function Login() {
+import { styles } from './styles';
+import { useAuth } from '../../context/AuthContext';
+
+export const Login = () => {
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
   const { login } = useAuth();
@@ -23,9 +23,9 @@ function Login() {
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
       history.push('/');
-      //   await sendemail();
     } catch {
       setError('Failed to sign in');
+      console.error(error, 'Failed to sign in');
     }
     setLoading(false);
   }
@@ -38,13 +38,8 @@ function Login() {
           {error}
         </Alert>
       )}
-      <form
-        css={{
-          marginTop: '55px',
-        }}
-        onSubmit={handleSubmit}
-      >
-        <label css={styles.lab}>Email</label>
+      <form css={styles.form} onSubmit={handleSubmit}>
+        <label css={styles.label}>Email</label>
         <br />
         <input
           className="holder"
@@ -55,16 +50,8 @@ function Login() {
           ref={emailRef}
         ></input>
         <br />
-        <label css={styles.lab} style={{ display: 'flex' }}>
-          Password &nbsp;{' '}
-          <p
-            css={{
-              color: 'rgba(37, 67, 83, 0.4)',
-              fontWeight: '600',
-            }}
-          >
-            (min 8 symbols)
-          </p>
+        <label css={styles.label} style={{ display: 'flex' }}>
+          Password &nbsp; <p css={styles.pass}>(min 8 symbols)</p>
         </label>
         <input
           className="holder"
@@ -80,6 +67,4 @@ function Login() {
       </form>
     </div>
   );
-}
-
-export default Login;
+};

@@ -3,7 +3,7 @@ import { AuthProvider } from '../context/AuthContext';
 import { SignUp, Home, Confirm, PrivateRoute, Login } from './index';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import '../App.css';
-import Header from './Header';
+import { Header } from './Header';
 
 function App() {
   return (
