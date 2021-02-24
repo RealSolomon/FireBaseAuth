@@ -15,4 +15,4 @@ yarn start
 See [Demo](https://softcery-b58c5.web.app).
 
 
-![alt text](screenshots/filename.png "Описание будет тут")
+![alt text](screenshots/demo.jpg "ScreenShot")
