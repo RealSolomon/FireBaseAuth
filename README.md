@@ -1,4 +1,4 @@
-# Тестовое Задание для Softserve!
+# Firebase Authentication!
 
 **_Стэк_** : React, Emotion.sh, Firebase, react-router.
 
