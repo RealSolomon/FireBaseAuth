@@ -4,8 +4,9 @@ import React from 'react';
 import { jsx } from '@emotion/react';
 import Alert from '@material-ui/lab/Alert';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
-import { useAuth } from '../../context/AuthContext';
+// import { useAuth } from '../../context/AuthContext';
 import { styles } from './styles';
 
 import mail from '../../img/mail.svg';
@@ -13,21 +14,29 @@ import spinner from '../../img/spinblue.svg';
 
 export const Confirm = () => {
   const [error, setError] = React.useState('');
-  const { currentUser, sendemail } = useAuth();
+  // const { currentUser, sendemail } = useAuth();
   const [loading, setLoading] = React.useState(false);
   const [timerRunning, setTimerRunning] = React.useState(true);
 
   const [counter, setCounter] = React.useState(60);
 
   React.useEffect(() => {
-    const data = localStorage.getItem('timer-counter');
-    if (data) {
-      setCounter(JSON.parse(data));
-    }
+    const data = parseInt(localStorage.getItem('timer'));
+    console.log(data);
+    const now = new Date().getTime();
+    console.log(now);
+    const diff = (now - data) / 1000;
+    console.log(Math.floor(diff));
+    const ost = 60 - Math.floor(diff);
+    setCounter(ost);
+    return () => {
+      // localStorage.setItem('timer', new Date().getTime());
+      console.log('Unmount', ost);
+    };
   }, []);
 
   React.useEffect(() => {
-    localStorage.setItem('timer-counter', JSON.stringify(counter));
+    localStorage.setItem('timer', new Date().getTime());
   });
 
   React.useEffect(() => {
@@ -54,7 +63,7 @@ export const Confirm = () => {
         setCounter(60);
         setTimerRunning(true);
       }, 2500);
-      await sendemail();
+      // await sendemail();
     } catch {
       setError('Failed to resend the message');
       console.error(error, 'Failed to sign in');
@@ -74,7 +83,7 @@ export const Confirm = () => {
           <p css={styles.info}>
             Please confirm your email by clicking on the link in the
             confirmation email that we sent to &nbsp;{' '}
-            <p css={styles.infomail}>{currentUser.email}</p>
+            {/* <p css={styles.infomail}>{currentUser.email}</p> */}
           </p>
 
           {timerRunning ? (

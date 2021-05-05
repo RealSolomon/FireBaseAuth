@@ -10,7 +10,7 @@ export const styles = {
     width: 100%;
     margin: 0 auto;
     height: 100%;
-    margin-top: 208px;
+    margin-top: 158px;
   `,
   head: css`
     font-weight: 800;
@@ -57,6 +57,9 @@ export const styles = {
     line-height: 22px;
     color: #fff;
     cursor: pointer;
-    margin-top: 40px;
+    margin-top: 30px;
+    &:disabled {
+      background-color: rgba(87, 179, 228, 0.7);
+    }
   `,
 };

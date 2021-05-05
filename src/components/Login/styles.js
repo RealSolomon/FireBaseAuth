@@ -57,6 +57,6 @@ export const styles = {
     line-height: 22px;
     color: #fff;
     cursor: pointer;
-    margin-top: 40px;
+    margin-top: 20px;
   `,
 };

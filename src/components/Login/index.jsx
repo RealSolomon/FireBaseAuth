@@ -2,69 +2,93 @@
 /** @jsx jsx */
 import React from 'react';
 import { jsx } from '@emotion/react';
-import { useHistory } from 'react-router-dom';
-import Alert from '@material-ui/lab/Alert';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux';
 
 import { styles } from './styles';
-import { useAuth } from '../../context/AuthContext';
 
-export const Login = () => {
-  const emailRef = React.useRef();
-  const passwordRef = React.useRef();
-  const { login } = useAuth();
-  const [error, setError] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
-  const history = useHistory();
+const LoginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email.')
+    .required('The email is required.'),
+  password: Yup.string()
+    .required('The password is required.')
+    .min(8, 'Too short.'),
+});
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      setError('');
-      setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      history.push('/');
-    } catch {
-      setError('Failed to sign in');
-      console.error(error, 'Failed to sign in');
-    }
-    setLoading(false);
-  }
-
+const Login = ({ login, loading }) => {
   return (
-    <div css={styles.container}>
-      <h2 css={styles.head}>Log In</h2>
-      {error && (
-        <Alert variant="outlined" severity="error">
-          {error}
-        </Alert>
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      validationSchema={LoginSchema}
+      onSubmit={async (values, { setSubmitting }) => {
+        await login(values);
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting, isValid }) => (
+        <Form css={styles.container}>
+          <div style={{ display: 'block' }}>
+            <h2 style={{ marginBottom: '10px' }} css={styles.head}>
+              Log In
+            </h2>
+            <label css={styles.label}>Email</label>
+            <br />
+            <Field
+              css={styles.holder}
+              style={{ marginBottom: '10px' }}
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+            />
+            <br />
+            <ErrorMessage name="email" />
+            <br />
+            <label
+              css={styles.label}
+              style={{ display: 'flex', marginTop: '10px' }}
+            >
+              Password &nbsp; <p css={styles.pass}>(min 8 symbols)</p>
+            </label>
+            <br />
+            <Field
+              css={styles.holder}
+              style={{ marginTop: '-10px', marginBottom: '10px' }}
+              type="password"
+              name="password"
+              placeholder="••••••••••••••••••••"
+            />
+            <br />
+            <ErrorMessage name="password" />
+            <br />
+            <button
+              css={styles.btn}
+              disabled={!isValid || isSubmitting}
+              loading={loading ? 'Logging in...' : null}
+              type="submit"
+            >
+              Log In
+            </button>
+          </div>
+        </Form>
       )}
-      <form css={styles.form} onSubmit={handleSubmit}>
-        <label css={styles.label}>Email</label>
-        <br />
-        <input
-          className="holder"
-          css={styles.holder}
-          style={{ marginBottom: '40px' }}
-          type="email"
-          placeholder="you@example.com"
-          ref={emailRef}
-        ></input>
-        <br />
-        <label css={styles.label} style={{ display: 'flex' }}>
-          Password &nbsp; <p css={styles.pass}>(min 8 symbols)</p>
-        </label>
-        <input
-          className="holder"
-          css={styles.holder}
-          type="password"
-          placeholder="••••••••••••••••••••"
-          ref={passwordRef}
-        ></input>
-        <br />
-        <button css={styles.btn} type="submit" disabled={loading}>
-          Log In
-        </button>
-      </form>
-    </div>
+    </Formik>
   );
 };
+
+const mapStateToProps = ({ auth }) => ({
+  loading: auth.loading,
+  error: auth.error,
+});
+
+const mapDispatchToProps = {
+  login: actions.signIn,
+  //   cleanUp: actions.clean,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

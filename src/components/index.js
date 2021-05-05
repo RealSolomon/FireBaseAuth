@@ -1,5 +1,5 @@
-export { Home } from './Home';
+export { default as Home } from './Home';
 export { Confirm } from './Confirm';
-export { SignUp } from './SignUp';
-export { Login } from './Login';
+export { default as SignUp } from './SignUp';
+export { default as Login } from './Login';
 export { default as PrivateRoute } from './PrivateRoute';

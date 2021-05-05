@@ -1,24 +1,46 @@
 import React from 'react';
-import { AuthProvider } from '../context/AuthContext';
-import { SignUp, Home, Confirm, PrivateRoute, Login } from './index';
-import { HashRouter as Router, Switch, Route } from 'react-router-dom';
-import '../App.css';
-import { Header } from './Header';
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import { connect } from 'react-redux';
 
-function App() {
+import { SignUp, Home, Confirm, Login } from './index';
+import { Header } from './Header';
+import '../App.css';
+
+function App({ loggedIn }) {
+  let routes;
+  if (loggedIn) {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/confirm" component={Confirm} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/login" component={Login} />
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
   return (
     <Router>
-      <AuthProvider>
-        <Header />
-        <Switch>
-          <PrivateRoute exact path="/" component={Home} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/confirm" component={Confirm} />
-        </Switch>
-      </AuthProvider>
+      <Header />
+      {routes}
     </Router>
   );
 }
 
-export default App;
+const mapStateToProps = ({ firebase }) => ({
+  loggedIn: firebase.auth.uid ? true : null,
+});
+
+export default connect(mapStateToProps)(App);
